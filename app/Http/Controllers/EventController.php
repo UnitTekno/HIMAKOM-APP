@@ -34,9 +34,9 @@ class EventController extends Controller
     {
         if ($request->ajax()) {
 
-            $typeExpression = 'CASE type ';
+            $typeExpression = 'CASE ';
             foreach (Event::EVENT_TYPE as $key => $value) {
-                $typeExpression .= 'WHEN ' . $key . ' THEN "' . $value . '" ';
+                $typeExpression .= 'WHEN "type" = \'' . $key . '\' THEN \'' . $value . '\' ';
             }
             $typeExpression .= 'END as type';
 

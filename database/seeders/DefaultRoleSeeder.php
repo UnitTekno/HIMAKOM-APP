@@ -38,6 +38,9 @@ class DefaultRoleSeeder extends Seeder
 
             'read-complaints',
             'create-complaints',
+
+            // Puzzle of Our Regeneration
+            'read-puzzle',
         ]);
 
         Role::create(['name' => 'WAKIL KETUA HIMPUNAN'])->givePermissionTo([
@@ -59,6 +62,9 @@ class DefaultRoleSeeder extends Seeder
             // Complaints
             'read-complaints',
             'create-complaints',
+
+            // Puzzle of Our Regeneration
+            'read-puzzle',
         ]);
 
         // Bendahara umum
@@ -78,6 +84,9 @@ class DefaultRoleSeeder extends Seeder
             // Complaints
             'read-complaints',
             'create-complaints',
+
+            // Puzzle of Our Regeneration
+            'read-puzzle',
         ]);
 
         // Sekretaris umum
@@ -97,6 +106,9 @@ class DefaultRoleSeeder extends Seeder
             // Complaints
             'read-complaints',
             'create-complaints',
+
+            // Puzzle of Our Regeneration
+            'read-puzzle',
         ]);
 
         Role::create(['name' => 'KETUA MAJELIS PERWAKILAN ANGGOTA'])->givePermissionTo([
@@ -111,6 +123,9 @@ class DefaultRoleSeeder extends Seeder
             // Complaints
             'read-complaints',
             'create-complaints',
+
+            // Puzzle of Our Regeneration
+            'read-puzzle',
         ]);
 
         Role::create(['name' => 'WAKIL KETUA MAJELIS PERWAKILAN ANGGOTA'])->givePermissionTo([
@@ -125,6 +140,9 @@ class DefaultRoleSeeder extends Seeder
             // Complaints
             'read-complaints',
             'create-complaints',
+
+            // Puzzle of Our Regeneration
+            'read-puzzle',
         ]);
 
         $dbu = DBU::select(['id', 'name'])
@@ -159,6 +177,9 @@ class DefaultRoleSeeder extends Seeder
                 // Complaints
                 'read-complaints',
                 'create-complaints',
+
+                // Puzzle of Our Regeneration
+                'read-puzzle',
             ]);
 
             Role::create(['name' => 'WAKIL KETUA ' . $dept->name])->givePermissionTo([
@@ -184,6 +205,9 @@ class DefaultRoleSeeder extends Seeder
                 // Complaints
                 'read-complaints',
                 'create-complaints',
+
+                // Puzzle of Our Regeneration
+                'read-puzzle',
             ]);
         }
 
@@ -213,6 +237,9 @@ class DefaultRoleSeeder extends Seeder
             // Complaints
             'read-complaints',
             'create-complaints',
+
+            // Puzzle of Our Regeneration
+            'read-puzzle',
         ]);
 
         Role::create(['name' => 'STAF MUDA'])->givePermissionTo([
@@ -228,6 +255,9 @@ class DefaultRoleSeeder extends Seeder
             // Complaints
             'read-complaints',
             'create-complaints',
+
+            // Puzzle of Our Regeneration
+            'read-puzzle',
         ]);
     }
 }

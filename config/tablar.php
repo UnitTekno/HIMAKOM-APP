@@ -16,7 +16,7 @@ return [
     'title_prefix' => '',
     'title_postfix' => '',
     'bottom_title' => 'UNIT TEKNOLOGI - HIMPUNAN MAHASISWA KOMPUTER',
-    'current_version' => 'v1.0.0',
+    'current_version' => 'v1.1.0',
 
 
     /*
@@ -246,6 +246,25 @@ return [
                     'icon' => 'ti ti-telescope',
                     'route' => 'logs.telescope.index',
                     'hasAnyPermission' => ['read-telescope'],
+                ],
+            ],
+        ],
+        [
+            'text' => 'Puzzle Regeneration',
+            'icon' => 'ti ti-puzzle',
+            'hasAnyPermission' => ['manage-puzzle', 'read-puzzle'],
+            'submenu' => [
+                [
+                    'text' => 'Manage Puzle',
+                    'icon' => '',
+                    'route' => 'puzzle.puzzle-regeneration.index',
+                    'hasAnyPermission' => ['manage-puzzle'],
+                ],
+                [
+                    'text' => 'Play Puzzle',
+                    'icon' => '',
+                    //'route' => 'logs.play-puzzle.index',
+                    'hasAnyPermission' => ['read-puzzle'],
                 ],
             ],
         ],

@@ -114,6 +114,12 @@ class DefaultPermissionSeeder extends Seeder
             'create-complaints',
             'update-complaints',
             'delete-complaints',
+
+            'manage-puzzle',
+            'read-puzzle',
+            'create-puzzle',
+            'update-puzzle',
+            'delete-puzzle',
         ];
 
         foreach ($permissions as $permission) {

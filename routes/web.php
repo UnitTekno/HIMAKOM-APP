@@ -118,6 +118,14 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/telescope', [\App\Http\Controllers\TelescopeController::class, 'index'])->name('telescope.index')->middleware('permission:read-telescope');
     });
 
+    // route puzzle
+    Route::group(['prefix' => 'puzzle', 'as' => 'puzzle.'], function () {
+        // Manage Puzzle
+        Route::get('/manage-puzzle', [\App\Http\Controllers\PuzzleController::class, 'index'])->name('puzzle-regeneration.index')->middleware('permission:manage-puzzle');
+        // Telescope
+        Route::get('/telescope', [\App\Http\Controllers\TelescopeController::class, 'index'])->name('telescope.index')->middleware('permission:read-telescope');
+    });
+
     // tom-select
     Route::get('/tom-select/users', [\App\Http\Controllers\TomSelectController::class, 'users'])->name('tom-select.users')->middleware('permission:read-users');
 

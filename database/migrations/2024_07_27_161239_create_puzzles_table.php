@@ -11,9 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        // Schema::table('events', function (Blueprint $table) {
-        //     $table->foreignId('dbu_id')->nullable()->constrained('dbus')->onDelete('cascade');
-        // });
+        Schema::create('puzzles', function (Blueprint $table) {
+            $table->id();
+            $table->string('title');
+            $table->string('picture');
+            $table->string('expected_answer');
+            $table->timestamps();
+        });
     }
 
     /**
@@ -21,8 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        // Schema::table('events', function (Blueprint $table) {
-        //     $table->dropForeign(['dbu_id']);
-        // });
+        Schema::dropIfExists('puzzles');
     }
 };
