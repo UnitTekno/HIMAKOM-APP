@@ -122,7 +122,10 @@ Route::group(['middleware' => ['auth']], function () {
     Route::group(['prefix' => 'puzzle', 'as' => 'puzzle.'], function () {
         // Manage Puzzle
         Route::get('/manage-puzzle', [\App\Http\Controllers\PuzzleController::class, 'index'])->name('puzzle-regeneration.index')->middleware('permission:manage-puzzle');
+        // Play Puzzle
+        Route::get('/play-puzzle', [\App\Http\Controllers\PuzzleController::class, 'play'])->name('play-puzzle.index')->middleware('permission:read-puzzle');
         // Telescope
+        Route::get('/play-puzzle/detail', [\App\Http\Controllers\PuzzleController::class, 'detail'])->name('play-puzzle.detail')->middleware('permission:read-puzzle');
         Route::get('/telescope', [\App\Http\Controllers\TelescopeController::class, 'index'])->name('telescope.index')->middleware('permission:read-telescope');
     });
 
