@@ -1,12 +1,12 @@
-<div class="modal fade" id="modal-add-users" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal fade" id="modal-add-puzzle" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Add Level</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>    
             </div>
             <div class="modal-body">
-                <form id="form-add-users">
+                <form id="form-add-puzzle">
                     <div class="row">
                         <div class="col-md-5">
                             <label class="form-label" for="add-picture">Picture</label>
@@ -21,8 +21,8 @@
                                 <input type="text" name="title" id="add-title" class="form-control" placeholder="Enter title" autocomplete="off" required>
                             </div>
                             <div class="mb-3">
-                                <label class="form-label" for="add-answer">Expected Answer</label>
-                                <input type="text" name="expected_answer" id="add-expected-answer" class="form-control" placeholder="Enter expected answer" autocomplete="off" required>
+                                <label class="form-label" for="add-expected_answer">Expected Answer</label>
+                                <input type="text" name="expected_answer" id="add-expected_answer" class="form-control" placeholder="Enter expected answer" autocomplete="off" required>
                             </div>
                         </div>
                     </div>
@@ -30,7 +30,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn" data-bs-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary ms-auto" id="submit-add-users">
+                <button type="button" class="btn btn-primary ms-auto" id="submit-add-puzzle">
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                         <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                         <line x1="12" y1="5" x2="12" y2="19" />

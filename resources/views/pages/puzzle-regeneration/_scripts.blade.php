@@ -1,31 +1,28 @@
 <script type="module">
-    class User {
+    class Puzzle {
         constructor() {
             // Empty & Subject
             this.emptyImage = "{{ asset(config('tablar.default.preview.path')) }}"
-            this.subject = 'users';
+            this.subject = 'puzzle';
 
             // Modal
-            this.modalAdd = new bootstrap.Modal($(`#modal-add-users`));
-            this.modalEdit = new bootstrap.Modal($(`#modal-edit-users`));
-            this.modalImport = new bootstrap.Modal($(`#modal-import-users`));
+            this.modalAdd = new bootstrap.Modal($(`#modal-add-puzzle`));
+            this.modalEdit = new bootstrap.Modal($(`#modal-edit-puzzle`));
 
             // Form
-            this.formAdd = $(`#form-add-users`);
-            this.formEdit = $(`#form-edit-users`);
-            this.formImport = $(`#form-import-users`);
+            this.formAdd = $(`#form-add-puzzle`);
+            this.formEdit = $(`#form-edit-puzzle`);
 
 
             // URL
-            this.storeUrl = "{{ route('users-management.users.store') }}";
-            this.editUrl = "{{ route('users-management.users.edit', ':id') }}";
-            this.deleteUrl = "{{ route('users-management.users.destroy', ':id') }}";
-            this.updateUrl = "{{ route('users-management.users.update', ':id') }}";
-            this.importUrl = "{{ route('import.users') }}";
+            this.storeUrl = "{{ route('puzzle.puzzle-regeneration.store') }}";
+            this.editUrl = "{{ route('puzzle.puzzle-regeneration.edit', ':id') }}";
+            this.deleteUrl = "{{ route('puzzle.puzzle-regeneration.destroy', ':id') }}";
+            this.updateUrl = "{{ route('puzzle.puzzle-regeneration.update', ':id') }}";
 
             // DataTable
-            this.table = $('#table-users');
-            this.tableDataUrl = "{{ route('users-management.users.index') }}";
+            this.table = $('#table-puzzle');
+            this.tableDataUrl = "{{ route('puzzle.puzzle-regeneration.index') }}";
             this.tableColumns = [{
                     title: 'No',
                     data: null,
@@ -52,81 +49,18 @@
                     }
                 },
                 {
-                    data: 'name',
-                    name: 'name',
-                    title: 'Name',
+                    data: 'title',
+                    name: 'title',
+                    title: 'Title',
                     responsivePriority: 2,
                     width: '10%'
                 },
                 {
-                    data: 'email',
-                    name: 'email',
-                    title: 'Email',
+                    data: 'expected_answer',
+                    name: 'expected_answer',
+                    title: 'Expected Answer',
                     responsivePriority: 3,
                     width: '10%'
-                },
-                {
-                    data: 'nim',
-                    name: 'nim',
-                    title: 'NIM',
-                    responsivePriority: 4,
-                    width: '10%'
-                },
-                {
-                    data: 'npa',
-                    name: 'npa',
-                    title: 'NPA',
-                    responsivePriority: 5,
-                    width: '10%'
-                },
-                {
-                    data: 'name_bagus',
-                    name: 'name_bagus',
-                    title: 'Name Bagus',
-                    responsivePriority: 5,
-                    width: '10%'
-                },
-                {
-                    data: 'gender',
-                    name: 'gender',
-                    title: 'Gender',
-                    responsivePriority: 5,
-                    width: '10%',
-                    render: (data) => data == '1' ? 'Male' : 'Female'
-                },
-                {
-                    data: 'year',
-                    name: 'year',
-                    title: 'Year',
-                    responsivePriority: 5,
-                    width: '10%'
-                },
-                {
-                    data: 'cabinet',
-                    name: 'cabinet.name',
-                    title: 'Cabinet',
-                    orderable: false,
-                    render: (data) => data ? `<span class="badge badge-outline text-blue m-1">${data.name}</span>` : ''
-                },
-                {
-                    data: 'dbu',
-                    name: 'dbu.name',
-                    title: 'DBU',
-                    orderable: false,
-                    render: (data) => data ? `<span class="badge badge-outline text-blue m-1">${data.name}</span>` : ''
-                },
-                {
-                    data: 'roles',
-                    name: 'roles.name',
-                    title: 'Roles',
-                    orderable: false,
-                    render: function(data, type, row) {
-                        let html = '';
-                        data.forEach(function(item, index) {
-                            html += `<span class="badge badge-outline text-blue m-1">${item.name}</span>`;
-                        });
-                        return html;
-                    }
                 },
                 {
                     data: null,
@@ -139,19 +73,19 @@
                         let html = '';
                         let btn = '';
 
-                        @can('update-users')
+                        @can('update-puzzle')
                             btn += `
                                 <li><a class="dropdown-item btn-edit" href="" data-id="${data.id}"><i class="ti ti-pencil"></i>&nbsp; Edit</a></li>
                             `;
                         @endcan
 
-                        @can('delete-users')
+                        @can('delete-puzzle')
                             btn += `
                                 <li><a class="dropdown-item btn-delete" href="" data-id="${data.id}"><i class="ti ti-trash"></i>&nbsp; Delete</a></li>
                             `;
                         @endcan
 
-                        @if (auth()->user()->hasAnyPermission(['update-users', 'delete-users']))
+                        @if (auth()->user()->hasAnyPermission(['update-puzzle', 'delete-puzzle']))
                             html = `
                                 <div class="btn-group">
                                     <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
@@ -186,14 +120,6 @@
 
                 this.formEdit[0].reset();
             });
-
-            $(`#modal-import-${this.subject}`).on("hidden.bs.modal", (e) => {
-                $(".is-invalid").removeClass("is-invalid");
-                $(".invalid-feedback").remove();
-
-                this.formImport[0].reset();
-            });
-
 
             $(`#add-picture`).on("change", () => {
                 const file = $(`#add-picture`)[0].files[0];
@@ -232,18 +158,15 @@
                         e.preventDefault();
 
                         // Set ID, We'll use it later
-                        $(`#edit-id-${this.subject}`).val($(e.currentTarget).data("id"));
+                        const id = $(e.currentTarget).data("id");
+                        $(`#edit-id-${this.subject}`).val(id);
 
                         $.ajax({
-                            url: this.editUrl.replace(":id", $(e.currentTarget).data("id")),
+                            url: this.editUrl.replace(":id", id),
                             method: "GET",
                             success: (response) => {
-                                $('#edit-name').val(response.data?.name);
-                                $('#edit-email').val(response.data?.email);
-                                $('#edit-nim').val(response.data?.nim);
-                                $('#edit-npa').val(response.data?.npa);
-                                $('#edit-name_bagus').val(response.data?.name_bagus);
-                                $('#edit-year').val(response.data?.year);
+                                $('#edit-title').val(response.data?.title);
+                                $('#edit-expected_answer').val(response.data?.expected_answer);
                                 $(`#preview-edit-picture`).attr("src", response.data?.picture);
                                 this.modalEdit.show();
                             },
@@ -434,74 +357,13 @@
                 });
             });
 
-            $(`#submit-import-${this.subject}`).on("click", (e) => {
-                e.preventDefault();
-
-                $(".is-invalid").removeClass("is-invalid");
-                $(".invalid-feedback").remove();
-                $(`#submit-import-users`).attr("disabled", true);
-                $(`#submit-import-users`).addClass("btn-loading");
-
-                const form = $(`#form-import-${this.subject}`);
-                const formData = new FormData(form[0]);
-
-                $.ajax({
-                    url: this.importUrl,
-                    method: "POST",
-                    data: formData,
-                    contentType: false,
-                    processData: false,
-                    complete: () => {
-                        $(`#submit-import-${this.subject}`).attr("disabled", false);
-                        $(`#submit-import-${this.subject}`).removeClass("btn-loading");
-
-                        this.modalImport.hide();
-
-                        this.table.DataTable().ajax.reload();
-                    },
-                    success: (response) => {
-                        if (response.status === "success") {
-                            Swal.fire({
-                                icon: "success",
-                                title: "Berhasil",
-                                text: response.message,
-                                showConfirmButton: false,
-                                timer: 1500,
-                            }).then(() => {
-                                user.table.ajax.reload();
-                                $(`#card-users`).before(`
-                                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                    <strong>Success!</strong> ${response.message}
-                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                                </div>
-                            `);
-                                $(".alert").delay(3000).slideUp(300);
-                            });
-                        } else {
-                            Swal.fire("Error!", response.message, "error");
-                        }
-                    },
-                    error: (response) => {
-                        if (response.status === 422) {
-                            const errors = response.responseJSON.errors;
-                            for (const key in errors) {
-                                if (Object.hasOwnProperty.call(errors, key)) {
-                                    const element = errors[key];
-                                }
-                            }
-                        } else {
-                            Swal.fire("Error!", response.responseJSON.message, "error");
-                        }
-                    },
-                });
-            });
         }
     }
 
     $(document).ready(function() {
-        const user = new User();
-        user.initDtEvents();
-        user.initDtTable();
-        user.initDtSubmit();
+        const puzzle = new Puzzle();
+        puzzle.initDtEvents();
+        puzzle.initDtTable();
+        puzzle.initDtSubmit();
     });
 </script>

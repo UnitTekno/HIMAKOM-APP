@@ -122,6 +122,10 @@ Route::group(['middleware' => ['auth']], function () {
     Route::group(['prefix' => 'puzzle', 'as' => 'puzzle.'], function () {
         // Manage Puzzle
         Route::get('/manage-puzzle', [\App\Http\Controllers\PuzzleController::class, 'index'])->name('puzzle-regeneration.index')->middleware('permission:manage-puzzle');
+        Route::post('/manage-puzzle/store', [\App\Http\Controllers\PuzzleController::class, 'store'])->name('puzzle-regeneration.store')->middleware('permission:create-puzzle');
+        Route::get('/manage-puzzle/{puzzle}/edit', [\App\Http\Controllers\PuzzleController::class, 'edit'])->name('puzzle-regeneration.edit')->middleware('permission:update-puzzle');
+        Route::put('/manage-puzzle/{puzzle}/update', [\App\Http\Controllers\PuzzleController::class, 'update'])->name('puzzle-regeneration.update')->middleware('permission:update-puzzle');
+        Route::delete('/manage-puzzle/{puzzle}/destroy', [\App\Http\Controllers\PuzzleController::class, 'destroy'])->name('puzzle-regeneration.destroy')->middleware('permission:delete-puzzle');
         // Telescope
         Route::get('/telescope', [\App\Http\Controllers\TelescopeController::class, 'index'])->name('telescope.index')->middleware('permission:read-telescope');
     });

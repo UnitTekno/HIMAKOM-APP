@@ -145,12 +145,12 @@ class DefaultRoleSeeder extends Seeder
             'read-puzzle',
         ]);
 
-        $dbu = DBU::select(['id', 'name'])
+        $dbu = DBU::select(['id', 'name', 'short_name'])
             ->whereNotIn('short_name', ['MPA'])
             ->get();
 
         foreach ($dbu as $dept) {
-            Role::create(['name' => 'KETUA ' . $dept->name])->givePermissionTo([
+            $ketuaRole = Role::create(['name' => 'KETUA ' . $dept->name])->givePermissionTo([
                 // Programs
                 'read-programs',
                 'create-programs',
@@ -182,7 +182,7 @@ class DefaultRoleSeeder extends Seeder
                 'read-puzzle',
             ]);
 
-            Role::create(['name' => 'WAKIL KETUA ' . $dept->name])->givePermissionTo([
+            $wakilKetuaRole = Role::create(['name' => 'WAKIL KETUA ' . $dept->name])->givePermissionTo([
                 // Programs
                 'read-programs',
                 'create-programs',
@@ -209,6 +209,21 @@ class DefaultRoleSeeder extends Seeder
                 // Puzzle of Our Regeneration
                 'read-puzzle',
             ]);
+
+            // adding Puzzle of Our Regeneration's role for ketua & wakil MSDH
+            if ($dept->short_name == 'MSDH') {
+                $ketuaRole->givePermissionTo([
+                    'create-puzzle',
+                    'update-puzzle',
+                    'delete-puzzle',
+                ]);
+        
+                $wakilKetuaRole->givePermissionTo([
+                    'create-puzzle',
+                    'update-puzzle',
+                    'delete-puzzle',
+                ]);
+            }
         }
 
         Role::create(['name' => 'STAF AHLI'])->givePermissionTo([

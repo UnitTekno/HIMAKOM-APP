@@ -25,4 +25,7 @@ return [
     'complaints' => [
         'screenshots' => 'complaints/screenshots',
     ],
+    'puzzle' => [
+        'pictures' => 'puzzle/pictures',
+    ],
 ];
