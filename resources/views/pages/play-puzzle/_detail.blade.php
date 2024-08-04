@@ -47,6 +47,13 @@
                 </div>
             </div>
             @endcan
+            <div class="card-footer">
+                <div class="d-flex justify-content-start">
+                    <a href="{{ url()->previous() }}" class="btn btn-outline-secondary">
+                        <i class="ti ti-arrow-left"></i> Back
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
 </div>
