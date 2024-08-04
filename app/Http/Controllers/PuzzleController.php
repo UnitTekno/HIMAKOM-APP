@@ -149,20 +149,6 @@ class PuzzleController extends Controller
      */
     public function destroy(Puzzle $puzzle)
     {
-        try {
-            deleteFile($this->path_picture_puzzle . '/' . $puzzle->getAttributes()['picture']);
-            $puzzle->delete();
-
-            return response()->json([
-                'status' => 'success',
-                'message' => 'Puzzles Level deleted successfully!',
-            ], 200);
-        } catch (\Exception $e) {
-            Log::error($e->getMessage());
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Something went wrong!',
-            ], 500);
-        }
+        
     }
 }

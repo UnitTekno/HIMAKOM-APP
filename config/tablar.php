@@ -263,7 +263,7 @@ return [
                 [
                     'text' => 'Play Puzzle',
                     'icon' => '',
-                    //'route' => 'logs.play-puzzle.index',
+                    'route' => 'puzzle.play-puzzle.index',
                     'hasAnyPermission' => ['read-puzzle'],
                 ],
             ],
