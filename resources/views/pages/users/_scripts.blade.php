@@ -73,7 +73,7 @@
                     responsivePriority: 1,
                     width: '10%',
                     render: function(data, type, row) {
-                        return `<img src="${data}" alt="picture" class="img-fluid" width="100">`;
+                        return `<a href="${data}" data-fslightbox="gallery"><img src="${data}" alt="picture" class="img-fluid" width="100"></a>`;
                     }
                 },
                 {
@@ -101,13 +101,6 @@
                     data: 'npa',
                     name: 'npa',
                     title: 'NPA',
-                    responsivePriority: 5,
-                    width: '10%'
-                },
-                {
-                    data: 'name_bagus',
-                    name: 'name_bagus',
-                    title: 'Name Bagus',
                     responsivePriority: 5,
                     width: '10%'
                 },
@@ -275,7 +268,6 @@
                                 $('#edit-email').val(response.data?.email);
                                 $('#edit-nim').val(response.data?.nim);
                                 $('#edit-npa').val(response.data?.npa);
-                                $('#edit-name_bagus').val(response.data?.name_bagus);
                                 $('#edit-year').val(response.data?.year);
                                 $(`#preview-edit-picture`).attr("src", response.data?.picture);
                                 this.tomSelectEditGender.setValue(response.data?.gender);
@@ -346,6 +338,8 @@
                             }
                         });
                     });
+
+                    refreshFsLightbox();
                 }
             });
         }
@@ -540,5 +534,6 @@
         user.initDtEvents();
         user.initDtTable();
         user.initDtSubmit();
+        refreshFsLightbox();
     });
 </script>

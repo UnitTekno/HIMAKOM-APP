@@ -59,7 +59,7 @@
                     responsivePriority: 1,
                     width: '10%',
                     render: function(data, type, row) {
-                        return `<img src="${data}" alt="Poster" class="img-fluid" width="100">`;
+                        return `<a href="${data}" data-fslightbox="gallery"><img src="${data}" alt="picture" class="img-fluid" width="100"></a>`;
                     }
                 },
                 {
@@ -379,6 +379,7 @@
                             }
                         });
                     });
+                    refreshFsLightbox();
                 }
             });
         }
@@ -511,5 +512,6 @@
         event.initDtEvents();
         event.initDtTable();
         event.initDtSubmit();
+        refreshFsLightbox();
     });
 </script>

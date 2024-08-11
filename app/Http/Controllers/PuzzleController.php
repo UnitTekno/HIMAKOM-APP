@@ -168,22 +168,23 @@ class PuzzleController extends Controller
 
     public function play()
     {
-        $puzzles = [
-            ['id' => 1, 'title' => 'Puzzle 1', 'expected_answer' => 'Answer 1'],
-            ['id' => 2, 'title' => 'Puzzle 2', 'expected_answer' => 'Answer 2'],
-            ['id' => 3, 'title' => 'Puzzle 3', 'expected_answer' => 'Answer 3'],
-            ['id' => 4, 'title' => 'Puzzle 4', 'expected_answer' => 'Answer 4'],
-            ['id' => 5, 'title' => 'Puzzle 5', 'expected_answer' => 'Answer 5'],
-            ['id' => 6, 'title' => 'Puzzle 6', 'expected_answer' => 'Answer 6'],
-            ['id' => 7, 'title' => 'Puzzle 7', 'expected_answer' => 'Answer 7'],
-            ['id' => 8, 'title' => 'Puzzle 8', 'expected_answer' => 'Answer 8'],
-            ['id' => 9, 'title' => 'Puzzle 9', 'expected_answer' => 'Answer 9'],
-            ['id' => 10, 'title' => 'Puzzle 10', 'expected_answer' => 'Answer 10'],
-            ['id' => 11, 'title' => 'Puzzle 11', 'expected_answer' => 'Answer 11'],
-        ];
+        // $puzzles = [
+        //     ['id' => 1, 'title' => 'Puzzle 1', 'expected_answer' => 'Answer 1'],
+        //     ['id' => 2, 'title' => 'Puzzle 2', 'expected_answer' => 'Answer 2'],
+        //     ['id' => 3, 'title' => 'Puzzle 3', 'expected_answer' => 'Answer 3'],
+        //     ['id' => 4, 'title' => 'Puzzle 4', 'expected_answer' => 'Answer 4'],
+        //     ['id' => 5, 'title' => 'Puzzle 5', 'expected_answer' => 'Answer 5'],
+        //     ['id' => 6, 'title' => 'Puzzle 6', 'expected_answer' => 'Answer 6'],
+        //     ['id' => 7, 'title' => 'Puzzle 7', 'expected_answer' => 'Answer 7'],
+        //     ['id' => 8, 'title' => 'Puzzle 8', 'expected_answer' => 'Answer 8'],
+        //     ['id' => 9, 'title' => 'Puzzle 9', 'expected_answer' => 'Answer 9'],
+        //     ['id' => 10, 'title' => 'Puzzle 10', 'expected_answer' => 'Answer 10'],
+        //     ['id' => 11, 'title' => 'Puzzle 11', 'expected_answer' => 'Answer 11'],
+        // ];
         // $levels = 38;
+        $puzzles = Puzzle::all(['id','title','picture','expected_answer']);
         $levels = count($puzzles);
-        $unlocked = 2;
+        $unlocked = 1;
         return view('pages.play-puzzle.index', compact('puzzles', 'levels', 'unlocked'));
     }
 

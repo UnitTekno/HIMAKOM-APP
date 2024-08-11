@@ -93,7 +93,7 @@ class DefaultDBUSeeder extends Seeder
             'name' => 'MANAJEMEN SUMBER DAYA HIMPUNAN',
             'short_name' => 'MSDH',
             'description' => '',
-            'logo' => 'LUHIM.png',
+            'logo' => 'MSDH.png',
         ]);
     }
 }

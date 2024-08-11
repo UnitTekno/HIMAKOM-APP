@@ -25,7 +25,7 @@
             <div class="col-12 col-lg-auto mt-3 mt-lg-0">
                 <ul class="list-inline list-inline-dots mb-0">
                     <li class="list-inline-item">
-                        Copyright &copy; 2023
+                        Copyright &copy; {{ \Carbon\Carbon::now()->year }}
                         <a href="#"
                            class="link-secondary">{{config('tablar.bottom_title', 'Himakom Polban')}}</a>.
                         All rights reserved.

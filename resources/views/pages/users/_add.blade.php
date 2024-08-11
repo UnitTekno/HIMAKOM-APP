@@ -44,10 +44,6 @@
                                 <input type="number" name="npa" id="add-npa" class="form-control" placeholder="Enter NPA" autocomplete="off" required>
                             </div>
                             <div class="mb-3">
-                                <label class="form-label" for="add-name_bagus">Name Bagus</label>
-                                <input type="text" name="name_bagus" id="add-name_bagus" class="form-control" placeholder="Enter Nama Bagus" autocomplete="off" required>
-                            </div>
-                            <div class="mb-3">
                                 <label class="form-label" for="add-year">Year</label>
                                 <input type="text" name="year" id="add-year" class="form-control" placeholder="Enter year" autocomplete="off" required>
                             </div>

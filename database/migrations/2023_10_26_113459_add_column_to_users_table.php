@@ -19,6 +19,7 @@ return new class extends Migration
             $table->year('year')->nullable();
             $table->string('device_token')->nullable();
             $table->boolean('gender')->comment('1: male, 0: female')->default(1);
+            $table->string('puzzle_level')->nullable();
         });
     }
 
@@ -35,7 +36,8 @@ return new class extends Migration
                 'picture',
                 'year',
                 'device_token',
-                'gender'
+                'gender',
+                'puzzle_level',
             ]);
         });
     }
