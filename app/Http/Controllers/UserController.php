@@ -105,6 +105,7 @@ class UserController extends Controller
                 'password' => bcrypt($request->password),
                 'dbu_id' => $request->dbu,
                 'cabinet_id' => $request->cabinet,
+                'puzzle_level' => 1,
             ]);
 
             $user->assignRole($request->role);
@@ -206,6 +207,7 @@ class UserController extends Controller
                 'password' => $request->password ? bcrypt($request->password) : $user->password,
                 'dbu_id' => $request->dbu,
                 'cabinet_id' => $request->cabinet,
+                'puzzle_level' => $request->puzzle_level,
             ]);
 
             $user->roles()->sync($request->role);

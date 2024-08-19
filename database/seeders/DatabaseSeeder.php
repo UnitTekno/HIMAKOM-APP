@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
             'name' => 'Unit Teknologi',
             'email' => 'unit.tekno@gmail.com',
             'password' => bcrypt('unittekno36'),
+            'puzzle_level' => 1,
         ]);
 
         $this->call(DefaultPermissionSeeder::class); // Create Permissions

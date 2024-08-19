@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Models\Puzzle;
+use App\Models\User;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\Auth;
 
 class PuzzleController extends Controller
 {
@@ -28,7 +30,9 @@ class PuzzleController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = Puzzle::all(['id','title','picture','expected_answer']);
+            $data = Puzzle::select(['id', 'title', 'picture', 'expected_answer', 'index'])
+            ->orderBy('index')
+            ->get();
             return DataTables::of($data)->make(true);
         }
 
@@ -52,16 +56,19 @@ class PuzzleController extends Controller
         }
 
         try {
-
             $picture = $request->file('picture');
             $originalName = pathinfo($picture->getClientOriginalName(), PATHINFO_FILENAME);
             $picture_name = date('Y-m-d-H-i-s') . '_' . $originalName . '.' . $picture->extension();
             $picture->storeAs($this->path_picture_puzzle, $picture_name, 'public');
 
+            $maxIndex = Puzzle::max('index');
+            $index = $maxIndex ? $maxIndex + 1 : 1;
+
             $puzzle = Puzzle::create([
                 'title' => $request->title,
                 'expected_answer' => $request->expected_answer,
                 'picture' => $picture_name,
+                'index' => $index,
             ]);
 
             return response()->json([
@@ -153,6 +160,8 @@ class PuzzleController extends Controller
             deleteFile($this->path_picture_puzzle . '/' . $puzzle->getAttributes()['picture']);
             $puzzle->delete();
 
+            $this->reorderIndexes();
+
             return response()->json([
                 'status' => 'success',
                 'message' => 'Puzzles Level deleted successfully!',
@@ -166,30 +175,75 @@ class PuzzleController extends Controller
         }
     }
 
-    public function play()
+    private function reorderIndexes()
     {
-        // $puzzles = [
-        //     ['id' => 1, 'title' => 'Puzzle 1', 'expected_answer' => 'Answer 1'],
-        //     ['id' => 2, 'title' => 'Puzzle 2', 'expected_answer' => 'Answer 2'],
-        //     ['id' => 3, 'title' => 'Puzzle 3', 'expected_answer' => 'Answer 3'],
-        //     ['id' => 4, 'title' => 'Puzzle 4', 'expected_answer' => 'Answer 4'],
-        //     ['id' => 5, 'title' => 'Puzzle 5', 'expected_answer' => 'Answer 5'],
-        //     ['id' => 6, 'title' => 'Puzzle 6', 'expected_answer' => 'Answer 6'],
-        //     ['id' => 7, 'title' => 'Puzzle 7', 'expected_answer' => 'Answer 7'],
-        //     ['id' => 8, 'title' => 'Puzzle 8', 'expected_answer' => 'Answer 8'],
-        //     ['id' => 9, 'title' => 'Puzzle 9', 'expected_answer' => 'Answer 9'],
-        //     ['id' => 10, 'title' => 'Puzzle 10', 'expected_answer' => 'Answer 10'],
-        //     ['id' => 11, 'title' => 'Puzzle 11', 'expected_answer' => 'Answer 11'],
-        // ];
-        // $levels = 38;
-        $puzzles = Puzzle::all(['id','title','picture','expected_answer']);
-        $levels = count($puzzles);
-        $unlocked = 1;
-        return view('pages.play-puzzle.index', compact('puzzles', 'levels', 'unlocked'));
+        $puzzles = Puzzle::orderBy('index')->get();
+        $index = 1;
+
+        foreach ($puzzles as $puzzle) {
+            $puzzle->update(['index' => $index]);
+            $index++;
+        }
     }
 
-    public function detail()
+    public function play()
     {
-        return view('pages.play-puzzle._detail');
+        $puzzles = Puzzle::select(['id', 'title', 'picture', 'expected_answer', 'index'])
+            ->orderBy('index')
+            ->get();
+        $levels = count($puzzles);
+        $userLevel = User::find(auth()->id());
+        return view('pages.play-puzzle.index', compact('puzzles', 'levels', 'userLevel'));
+    }
+
+    public function detail(Request $request)
+    {
+        $puzzleId = $request->query('id');
+        $puzzle = Puzzle::findOrFail($puzzleId);
+
+        return view('pages.play-puzzle._detail', compact('puzzle'));
+    }
+
+    public function levelUp(Request $request, Puzzle $puzzle)
+    {
+        $validator = Validator::make($request->all(), [
+            'password' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Validation error!',
+                'errors' => $validator->errors(),
+            ], 422);
+        }
+
+        $user = User::find(auth()->id());
+
+        if ($request->password == $puzzle->expected_answer) {
+            $user->update([
+                'puzzle_level' => $puzzle->index + 1,
+            ]);
+    
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Selamat! Anda berhasil menjawab dengan benar.',
+                'puzzle_id' => $puzzle->id,
+            ], 200);
+        } else {
+            $errorMessages = [
+                'Jawaban Anda salah, silakan coba lagi.',
+                'Maaf, Anda kurang beruntung.',
+                'Coba lagi, ya!',
+                'Hmm, jawaban Anda kurang tepat.',
+            ];
+    
+            $randomErrorMessage = $errorMessages[array_rand($errorMessages)];
+    
+            return response()->json([
+                'status' => 'error',
+                'message' => $randomErrorMessage,
+            ], 400);
+        }
     }
 }

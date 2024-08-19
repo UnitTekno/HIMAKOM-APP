@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('puzzles', function (Blueprint $table) {
             $table->id();
+            $table->integer('index');
             $table->string('title');
             $table->string('picture');
             $table->string('expected_answer');

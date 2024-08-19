@@ -21,7 +21,7 @@
         </div>
     </div>
     <!-- Page body -->
-    <div class="page-body">
+    <div class="page-body" id="main-content">
         <div class="container">
             <div class="card" id="card-notifications">
                 @can('create-notifications')

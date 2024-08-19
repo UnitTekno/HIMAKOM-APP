@@ -128,7 +128,8 @@ Route::group(['middleware' => ['auth']], function () {
         Route::delete('/manage-puzzle/{puzzle}/destroy', [\App\Http\Controllers\PuzzleController::class, 'destroy'])->name('puzzle-regeneration.destroy')->middleware('permission:delete-puzzle');
         // Play Puzzle
         Route::get('/play-puzzle', [\App\Http\Controllers\PuzzleController::class, 'play'])->name('play-puzzle.index')->middleware('permission:read-puzzle');
-        Route::get('/play-puzzle/detail', [\App\Http\Controllers\PuzzleController::class, 'detail'])->name('play-puzzle.detail')->middleware('permission:read-puzzle');
+        Route::get('/play-puzzle/detail', [\App\Http\Controllers\PuzzleController::class, 'detail'])->name('play-puzzle.detail')->middleware(['permission:read-puzzle', 'check.puzzle.access']);
+        Route::post('/play-puzzle/store/{puzzle}', [\App\Http\Controllers\PuzzleController::class, 'levelUp'])->name('play-puzzle.store')->middleware('permission:read-puzzle');
         // Telescope
         Route::get('/telescope', [\App\Http\Controllers\TelescopeController::class, 'index'])->name('telescope.index')->middleware('permission:read-telescope');
     });

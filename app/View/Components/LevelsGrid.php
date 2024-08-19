@@ -8,14 +8,14 @@ use Illuminate\View\Component;
 class LevelsGrid extends Component
 {
     public $levels;
-    public $width;
-    public $height;
-    public $unlocked;
+    public $puzzles;
+    public $userLevel;
 
-    public function __construct($levels, $unlocked)
+    public function __construct($levels, $puzzles, $userLevel)
     {
         $this->levels = $levels;
-        $this->unlocked = $unlocked;
+        $this->puzzles = $puzzles;
+        $this->userLevel = $userLevel;
     }
 
     public function render()

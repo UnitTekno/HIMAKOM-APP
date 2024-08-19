@@ -256,13 +256,13 @@ return [
             'submenu' => [
                 [
                     'text' => 'Manage Puzle',
-                    'icon' => '',
+                    'icon' => 'ti ti-settings-2',
                     'route' => 'puzzle.puzzle-regeneration.index',
                     'hasAnyPermission' => ['manage-puzzle'],
                 ],
                 [
                     'text' => 'Play Puzzle',
-                    'icon' => '',
+                    'icon' => 'ti ti-player-play',
                     'route' => 'puzzle.play-puzzle.index',
                     'hasAnyPermission' => ['read-puzzle'],
                 ],

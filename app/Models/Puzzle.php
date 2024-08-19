@@ -10,9 +10,11 @@ class Puzzle extends Model
 {
     use HasFactory;
     protected $fillable = [
+        'index',
         'title',
         'picture',
         'expected_answer',
+        'index'
     ];
 
     /**

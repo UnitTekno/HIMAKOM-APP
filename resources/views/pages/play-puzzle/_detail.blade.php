@@ -22,7 +22,10 @@
     <div class="container">
         <div class="card" id="card-play-puzzle">
             <div class="card-header">
-                <h1>Puzzle Regeneration</h1>
+                <div class="card-header-puzzle">
+                    <h1 class="header-title">Puzzle of Our Regeneration</h1>
+                    <p class="header-description">"{{ $puzzle->title }}"</p>
+                </div>
             </div>
             @can('read-puzzle')
             <div class="card-body d-flex flex-column justify-content-center p-3">
@@ -30,20 +33,17 @@
                 <div id="carouselExample" class="carousel slide">
                     <div class="carousel-inner">
                         <div class="carousel-item active">
-                            <img src="{{ asset('assets/images/test-play-puzzle/clue.png') }}" class="d-block w-100" alt="Clue">
-                        </div>
-                        <div class="carousel-item">
-                            <img src="{{ asset('assets/images/test-play-puzzle/konten.png') }}" class="d-block w-100" alt="Konten">
+                            <img src="{{ $puzzle->picture }}" class="d-block w-100" alt="{{ $puzzle->title }}">
                         </div>
                     </div>
-                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+                    {{-- <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                         <span class="visually-hidden">Previous</span>
                     </button>
                     <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
                         <span class="carousel-control-next-icon" aria-hidden="true"></span>
                         <span class="visually-hidden">Next</span>
-                    </button>
+                    </button> --}}
                 </div>
             </div>
             @endcan

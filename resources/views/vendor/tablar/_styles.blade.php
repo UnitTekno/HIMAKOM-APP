@@ -15,4 +15,19 @@
             margin-top: 10px; /* Atur jarak antara label Search dan input */
         }
     }
+
+    .card-header-puzzle {
+        display: grid;
+        grid-template-rows: auto auto;
+    }
+
+    .header-title {
+        font-size: 1.5rem;
+    }
+
+    .header-description {
+        font-size: 1.2rem;
+        font-style: italic;
+        margin: 0;
+    }
 </style>

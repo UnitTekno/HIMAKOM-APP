@@ -49,6 +49,14 @@
                     }
                 },
                 {
+                    data: 'index',
+                    name: 'index',
+                    title: 'Index Level',
+                    responsivePriority: 2,
+                    className: 'dt-center', 
+                    width: '10%'
+                },
+                {
                     data: 'title',
                     name: 'title',
                     title: 'Title',
